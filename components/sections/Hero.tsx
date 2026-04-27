@@ -11,9 +11,9 @@ const PLATFORMS = [
 ];
 
 const BULLETS = [
-  { emoji: '🎬', title: 'Самые свежие AI-модели', sub: 'Kling, Runway, Veo, Sora — выбираем под формат, не под бюджет.' },
-  { emoji: '🕵', title: 'Без AI-метаданных',        sub: 'Алгоритмы видят живую съёмку. Охват не режется.' },
-  { emoji: '📈', title: 'Блогеры-миллионники',      sub: 'Делаем для тех, кто умеет считать выручку с просмотра.' },
+  { emoji: '🎬', text: 'Самые актуальные AI-модели генерации видео' },
+  { emoji: '🕵', text: 'Отсутствие мета-данных — алгоритмы не распознают наши видео как AI-контент' },
+  { emoji: '📈', text: 'Наши клиенты — блогеры-миллионники' },
 ];
 
 export function Hero() {
@@ -23,22 +23,22 @@ export function Hero() {
 
       <div className="container-x relative z-10 flex flex-col items-center text-center">
         <div className="hero-entry mb-6" style={{ animationDelay: '0s' }}>
-          <span className="eyebrow">Фабрика вертикального видео</span>
+          <span className="eyebrow">Контент-завод</span>
         </div>
 
         <h1
-          className="hero-entry h-display mb-7 max-w-[18ch] text-[clamp(2.5rem,7vw,6.5rem)]"
+          className="hero-entry h-display mb-7 max-w-[20ch] text-[clamp(2.5rem,7vw,6.25rem)]"
           style={{ animationDelay: '0.15s' }}
         >
-          Контент, неотличимый от&nbsp;съёмки.{' '}
+          Вертикальный контент{' '}
           <span className="text-gradient-hero">50–150 роликов в&nbsp;месяц.</span>
         </h1>
 
         <p
-          className="hero-entry mb-10 max-w-[36ch] text-[clamp(1.05rem,1.5vw,1.25rem)] leading-snug text-text1"
+          className="hero-entry mb-10 max-w-[42ch] text-[clamp(1.05rem,1.5vw,1.25rem)] leading-snug text-text1"
           style={{ animationDelay: '0.3s' }}
         >
-          Reels, Shorts, TikTok без вашего участия. Метаданных AI&nbsp;нет — алгоритмы видят живое видео.
+          Создаём контент, неотличимый от&nbsp;реальных съёмок, для&nbsp;вашего бизнеса. Без вашего участия.
         </p>
 
         <div
@@ -86,14 +86,13 @@ export function Hero() {
         </div>
 
         <ul
-          className="hero-entry grid w-full max-w-[960px] grid-cols-1 gap-7 text-left md:grid-cols-3"
+          className="hero-entry grid w-full max-w-[960px] grid-cols-1 gap-5 text-left md:grid-cols-3"
           style={{ animationDelay: '0.9s' }}
         >
           {BULLETS.map((b) => (
-            <li key={b.title} className="card-base">
+            <li key={b.text} className="card-base">
               <div className="text-[28px] leading-none">{b.emoji}</div>
-              <div className="mt-4 text-[16px] font-semibold text-text0">{b.title}</div>
-              <div className="mt-2 text-[14px] leading-relaxed text-text1">{b.sub}</div>
+              <div className="mt-4 text-[15px] font-medium leading-relaxed text-text0">{b.text}</div>
             </li>
           ))}
         </ul>

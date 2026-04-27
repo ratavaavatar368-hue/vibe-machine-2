@@ -76,10 +76,10 @@ export function ReelsSlider() {
   return (
     <section id="reels" className="block">
       <div className="container-x">
-        <div className="mb-12">
+        <div className="mb-12 reveal-up reveal-up--in">
           <SectionLabel>Demo Reel</SectionLabel>
-          <h2 className="h-display mt-5 max-w-[20ch] text-[clamp(2rem,4.5vw,4rem)]">
-            Смотрите сами. <span className="text-text2">Без описаний.</span>
+          <h2 className="h-display mt-5 max-w-[24ch] text-[clamp(2rem,4.5vw,4rem)]">
+            Слайдер с&nbsp;нашими <span className="text-gradient-hero">лучшими роликами.</span>
           </h2>
         </div>
 

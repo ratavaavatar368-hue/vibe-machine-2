@@ -289,6 +289,20 @@ button {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Lightweight IO-based scroll reveal (no framer-motion overhead) */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-reveal),
+    transform 0.7s var(--ease-reveal);
+  will-change: opacity, transform;
+}
+.reveal-up--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Plasma glow */
 .plasma {
   position: absolute;

@@ -27,18 +27,18 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: 'Vibe Machine — фабрика вертикального видео. 50–150 роликов в месяц',
-  description: siteConfig.description,
+  title: 'Контент-завод — 50–150 вертикальных роликов в месяц',
+  description: 'Reels, Shorts, TikTok без вашего участия. AI-видео без метаданных, неотличимые от реальных съёмок.',
   openGraph: {
-    title: 'Vibe Machine — фабрика вертикального видео',
-    description: siteConfig.description,
+    title: 'Контент-завод — 50–150 вертикальных роликов в месяц',
+    description: 'Reels, Shorts, TikTok без вашего участия. AI-видео без метаданных, неотличимые от реальных съёмок.',
     type: 'website',
     locale: 'ru_RU',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vibe Machine — фабрика вертикального видео',
-    description: siteConfig.description,
+    title: 'Контент-завод — 50–150 вертикальных роликов в месяц',
+    description: 'Reels, Shorts, TikTok без вашего участия. AI-видео без метаданных, неотличимые от реальных съёмок.',
   },
   robots: { index: true, follow: true },
 };
