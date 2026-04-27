@@ -4,8 +4,8 @@ export function Footer() {
   return (
     <footer className="border-t border-white/[0.06]">
       <div className="container-x flex flex-col items-start justify-between gap-6 py-10 md:flex-row md:items-center">
-        <div className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.14em] text-text0">
-          <span className="inline-block h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--accent)]" />
+        <div className="flex items-center gap-1.5 font-mono text-[12px] uppercase tracking-[0.14em] text-text0">
+          <span className="text-accent text-[15px] leading-none drop-shadow-[0_0_8px_rgba(255,204,0,0.6)]">⚡</span>
           VIBE MACHINE
         </div>
         <div className="font-mono text-[12px] uppercase tracking-[0.1em] text-text3">

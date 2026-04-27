@@ -27,17 +27,17 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: 'Контент-завод — 50–150 вертикальных роликов в месяц',
+  title: 'Контент-завод — 50–100 вертикальных роликов в месяц',
   description: 'Reels, Shorts, TikTok без вашего участия. AI-видео без метаданных, неотличимые от реальных съёмок.',
   openGraph: {
-    title: 'Контент-завод — 50–150 вертикальных роликов в месяц',
+    title: 'Контент-завод — 50–100 вертикальных роликов в месяц',
     description: 'Reels, Shorts, TikTok без вашего участия. AI-видео без метаданных, неотличимые от реальных съёмок.',
     type: 'website',
     locale: 'ru_RU',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Контент-завод — 50–150 вертикальных роликов в месяц',
+    title: 'Контент-завод — 50–100 вертикальных роликов в месяц',
     description: 'Reels, Shorts, TikTok без вашего участия. AI-видео без метаданных, неотличимые от реальных съёмок.',
   },
   robots: { index: true, follow: true },

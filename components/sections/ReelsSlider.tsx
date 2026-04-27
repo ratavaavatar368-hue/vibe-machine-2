@@ -20,32 +20,47 @@ export function ReelsSlider() {
 
   const total = reels.length;
 
-  const updateActive = useCallback(() => {
-    const el = trackRef.current;
-    if (!el) return;
-    const cards = Array.from(el.querySelectorAll<HTMLElement>('[data-card]'));
-    const center = el.scrollLeft + el.clientWidth / 2;
-    let bestIdx = 0;
-    let bestDist = Infinity;
-    cards.forEach((c, i) => {
-      const cardCenter = c.offsetLeft + c.offsetWidth / 2;
-      const d = Math.abs(cardCenter - center);
-      if (d < bestDist) { bestDist = d; bestIdx = i; }
-    });
-    setActive(bestIdx);
-  }, []);
-
+  // rAF-throttled scroll handler with change-guard.
+  // Replaces per-event setState (which re-rendered all 6 cards on every scroll tick).
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
-    updateActive();
-    el.addEventListener('scroll', updateActive, { passive: true });
-    window.addEventListener('resize', updateActive);
-    return () => {
-      el.removeEventListener('scroll', updateActive);
-      window.removeEventListener('resize', updateActive);
+
+    let frame = 0;
+    let lastIdx = -1;
+
+    const recompute = () => {
+      frame = 0;
+      const cards = el.querySelectorAll<HTMLElement>('[data-card]');
+      const center = el.scrollLeft + el.clientWidth / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < cards.length; i++) {
+        const c = cards[i];
+        const cardCenter = c.offsetLeft + c.offsetWidth / 2;
+        const d = Math.abs(cardCenter - center);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      }
+      if (bestIdx !== lastIdx) {
+        lastIdx = bestIdx;
+        setActive(bestIdx);
+      }
     };
-  }, [updateActive]);
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(recompute);
+    };
+
+    recompute();
+    el.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      el.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
   const scrollTo = useCallback((idx: number) => {
     const el = trackRef.current;
@@ -76,11 +91,8 @@ export function ReelsSlider() {
   return (
     <section id="reels" className="block">
       <div className="container-x">
-        <div className="mb-12 reveal-up reveal-up--in">
-          <SectionLabel>Demo Reel</SectionLabel>
-          <h2 className="h-display mt-5 max-w-[24ch] text-[clamp(2rem,4.5vw,4rem)]">
-            Слайдер с&nbsp;нашими <span className="text-gradient-hero">лучшими роликами.</span>
-          </h2>
+        <div className="mb-10 reveal-up reveal-up--in">
+          <SectionLabel>Лучшие ролики</SectionLabel>
         </div>
 
         <div className="relative">

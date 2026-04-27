@@ -31,7 +31,7 @@ export function Hero() {
           style={{ animationDelay: '0.15s' }}
         >
           Вертикальный контент{' '}
-          <span className="text-gradient-hero">50–150 роликов в&nbsp;месяц.</span>
+          <span className="text-gradient-hero">50–100 роликов в&nbsp;месяц.</span>
         </h1>
 
         <p
@@ -86,7 +86,7 @@ export function Hero() {
         </div>
 
         <ul
-          className="hero-entry grid w-full max-w-[960px] grid-cols-1 gap-5 text-left md:grid-cols-3"
+          className="hero-entry grid w-full max-w-[1080px] grid-cols-1 gap-6 text-left md:grid-cols-3 md:gap-8"
           style={{ animationDelay: '0.9s' }}
         >
           {BULLETS.map((b) => (
@@ -96,14 +96,6 @@ export function Hero() {
             </li>
           ))}
         </ul>
-      </div>
-
-      <div
-        aria-hidden
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-text2"
-      >
-        <span className="font-mono text-[11px] uppercase tracking-[0.2em]">Листай</span>
-        <span className="block h-8 w-px bg-gradient-to-b from-accent to-transparent" />
       </div>
     </section>
   );

@@ -57,7 +57,7 @@ export default async function OGImage() {
             zIndex: 1,
           }}
         >
-          50–150 вертикальных роликов в&nbsp;месяц.{' '}
+          50–100 вертикальных роликов в&nbsp;месяц.{' '}
           <span style={{ color: '#ffcc00' }}>Без вашего участия.</span>
         </div>
         <div

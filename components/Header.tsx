@@ -34,9 +34,9 @@ export function Header() {
       <div className="container-x flex items-center justify-between gap-4 py-4">
         <a
           href="#top"
-          className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.14em] text-text0 transition-opacity hover:opacity-80"
+          className="flex items-center gap-1.5 font-mono text-[12px] uppercase tracking-[0.14em] text-text0 transition-opacity hover:opacity-80"
         >
-          <span className="inline-block h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--accent)]" />
+          <span className="text-accent text-[15px] leading-none drop-shadow-[0_0_8px_rgba(255,204,0,0.6)]">⚡</span>
           VIBE MACHINE
         </a>
 
