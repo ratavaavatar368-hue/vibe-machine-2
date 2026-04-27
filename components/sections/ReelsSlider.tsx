@@ -2,12 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { SectionLabel } from '../ui/SectionLabel';
 import { reels, type Reel } from '@/data/reels';
-
-const FADE = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
 
 export function ReelsSlider() {
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -33,10 +30,7 @@ export function ReelsSlider() {
     cards.forEach((c, i) => {
       const cardCenter = c.offsetLeft + c.offsetWidth / 2;
       const d = Math.abs(cardCenter - center);
-      if (d < bestDist) {
-        bestDist = d;
-        bestIdx = i;
-      }
+      if (d < bestDist) { bestDist = d; bestIdx = i; }
     });
     setActive(bestIdx);
   }, []);
@@ -63,12 +57,9 @@ export function ReelsSlider() {
     el.scrollTo({ left, behavior: 'smooth' });
   }, []);
 
-  // Esc to close modal
   useEffect(() => {
     if (openIdx === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpenIdx(null);
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpenIdx(null); };
     document.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
     return () => {
@@ -83,33 +74,16 @@ export function ReelsSlider() {
   );
 
   return (
-    <section
-      id="reels"
-      aria-labelledby="reels-title"
-      className="border-t border-border py-20 md:py-30"
-      style={{ paddingTop: 'clamp(80px, 12vw, 120px)', paddingBottom: 'clamp(80px, 12vw, 120px)' }}
-    >
-      <div className="mx-auto max-w-container px-6 md:px-12">
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ staggerChildren: 0.08, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.div variants={FADE} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
-            <SectionLabel>Demo Reel</SectionLabel>
-          </motion.div>
-          <motion.h2
-            id="reels-title"
-            variants={FADE}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="h2 mt-5 max-w-[18ch] text-text"
-          >
-            Смотрите сами. Без описаний.
-          </motion.h2>
-        </motion.div>
+    <section id="reels" className="block">
+      <div className="container-x">
+        <div className="mb-12">
+          <SectionLabel>Demo Reel</SectionLabel>
+          <h2 className="h-display mt-5 max-w-[20ch] text-[clamp(2rem,4.5vw,4rem)]">
+            Смотрите сами. <span className="text-text2">Без описаний.</span>
+          </h2>
+        </div>
 
-        <div className="relative mt-12">
+        <div className="relative">
           <div
             ref={trackRef}
             className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 md:-mx-12 md:px-12"
@@ -126,28 +100,36 @@ export function ReelsSlider() {
                   onClick={() => setOpenIdx(i)}
                   aria-label={`Открыть ${r.title}`}
                   className={clsx(
-                    'group relative flex-shrink-0 snap-center overflow-hidden rounded-[12px] border bg-bg-elev transition-all duration-300 ease-out-quart',
-                    'h-[480px] w-[270px] md:h-[534px] md:w-[300px]',
+                    'group relative flex-shrink-0 snap-center overflow-hidden bg-bg1 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                    'rounded-[1.75rem] border',
+                    'h-[480px] w-[270px] md:h-[560px] md:w-[315px]',
                     isActive
-                      ? 'scale-100 border-border-strong opacity-100'
-                      : 'scale-95 border-border opacity-60 hover:opacity-90',
+                      ? 'scale-[1.02] border-[rgba(255,204,0,0.35)] opacity-100 shadow-[0_0_48px_rgba(255,204,0,0.18)]'
+                      : 'scale-[0.94] border-white/[0.06] opacity-50 hover:opacity-80',
                   )}
                 >
                   <Image
                     src={r.poster}
                     alt={r.title}
                     fill
-                    sizes="(max-width: 768px) 90vw, 300px"
+                    sizes="(max-width: 768px) 90vw, 315px"
                     className="object-cover"
                     priority={i < 2}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black/50" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-md transition-transform duration-200 group-hover:scale-110">
+                    <span
+                      className={clsx(
+                        'flex h-16 w-16 items-center justify-center rounded-full backdrop-blur-md transition-transform duration-200 group-hover:scale-110',
+                        isActive
+                          ? 'bg-accent text-bg0 shadow-[0_0_36px_rgba(255,204,0,0.55)]'
+                          : 'border border-white/30 bg-black/40 text-white',
+                      )}
+                    >
                       <PlayIcon />
                     </span>
                   </div>
-                  <span className="absolute bottom-3 left-3 font-mono text-[11px] uppercase tracking-[0.08em] text-white/80">
+                  <span className="absolute bottom-4 left-4 font-mono text-[11px] uppercase tracking-[0.12em] text-white/85">
                     {r.title}
                   </span>
                 </button>
@@ -160,13 +142,15 @@ export function ReelsSlider() {
               <ArrowBtn dir="prev" disabled={active === 0} onClick={() => scrollTo(active - 1)} />
               <ArrowBtn dir="next" disabled={active === total - 1} onClick={() => scrollTo(active + 1)} />
             </div>
-            <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-text-mute tabular">
-              Ролик {String(active + 1).padStart(2, '0')} из {String(total).padStart(2, '0')}
+            <span className="font-mono text-[12px] uppercase tracking-[0.12em] text-text2 tabular">
+              <span className="text-accent">{String(active + 1).padStart(2, '0')}</span>
+              <span className="mx-2 text-text3">/</span>
+              {String(total).padStart(2, '0')}
             </span>
           </div>
 
           {isTouch && (
-            <div className="mt-4 text-center font-mono text-[11px] uppercase tracking-[0.08em] text-text-mute">
+            <div className="mt-4 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-text2">
               ← свайп →
             </div>
           )}
@@ -178,17 +162,14 @@ export function ReelsSlider() {
           role="dialog"
           aria-modal="true"
           aria-label={currentReel.title}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 px-4 py-8 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 px-4 py-8 backdrop-blur-md"
           onClick={() => setOpenIdx(null)}
         >
           <button
             type="button"
             aria-label="Закрыть"
-            className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white transition-colors hover:bg-black/70"
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpenIdx(null);
-            }}
+            className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white transition-all hover:scale-105 hover:border-accent hover:text-accent"
+            onClick={(e) => { e.stopPropagation(); setOpenIdx(null); }}
           >
             ✕
           </button>
@@ -201,12 +182,11 @@ export function ReelsSlider() {
               key={currentReel.id}
               src={currentReel.src}
               poster={currentReel.poster}
-              className="h-full w-full rounded-[12px] bg-black object-cover"
+              className="h-full w-full rounded-[1.75rem] bg-black object-cover shadow-[0_0_80px_rgba(255,204,0,0.25)]"
               autoPlay
               loop
               playsInline
               controls
-              muted={false}
               preload="auto"
             />
           </div>
@@ -216,15 +196,7 @@ export function ReelsSlider() {
   );
 }
 
-function ArrowBtn({
-  dir,
-  onClick,
-  disabled,
-}: {
-  dir: 'prev' | 'next';
-  onClick: () => void;
-  disabled?: boolean;
-}) {
+function ArrowBtn({ dir, onClick, disabled }: { dir: 'prev' | 'next'; onClick: () => void; disabled?: boolean }) {
   return (
     <button
       type="button"
@@ -232,20 +204,20 @@ function ArrowBtn({
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        'flex h-10 w-10 items-center justify-center rounded-full border border-border bg-transparent text-text transition-all duration-200',
+        'flex h-11 w-11 items-center justify-center rounded-full border bg-transparent transition-all duration-200',
         disabled
-          ? 'cursor-not-allowed opacity-40'
-          : 'hover:border-border-strong hover:bg-bg-elev-2',
+          ? 'cursor-not-allowed border-white/10 text-text3 opacity-50'
+          : 'border-white/15 text-text0 hover:border-accent hover:text-accent hover:shadow-[0_0_24px_rgba(255,204,0,0.25)]',
       )}
     >
-      <span aria-hidden>{dir === 'prev' ? '‹' : '›'}</span>
+      <span aria-hidden className="text-lg">{dir === 'prev' ? '‹' : '›'}</span>
     </button>
   );
 }
 
 function PlayIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M8 5v14l11-7L8 5z" fill="currentColor" />
     </svg>
   );

@@ -3,50 +3,26 @@
 import clsx from 'clsx';
 
 type Variant = 'primary' | 'ghost';
-type Size = 'md' | 'lg';
 
 interface ButtonProps {
   href?: string;
   onClick?: () => void;
   variant?: Variant;
-  size?: Size;
+  size?: 'md' | 'lg';
+  glow?: boolean;
   children: React.ReactNode;
   className?: string;
-  /** Analytics label used by data-analytics attribute and (optionally) Yandex.Metrika reachGoal */
   analyticsLabel?: string;
   external?: boolean;
 }
 
-const base =
-  'inline-flex items-center justify-center gap-2 rounded-btn font-medium transition-all duration-200 ease-out-quart will-change-transform select-none whitespace-nowrap';
-
-const variants: Record<Variant, string> = {
-  primary:
-    'bg-accent text-bg hover:opacity-90 hover:-translate-y-px active:translate-y-0 active:opacity-95',
-  ghost:
-    'text-text-dim hover:text-text border border-border hover:border-border-strong bg-transparent hover:bg-bg-elev-2',
-};
-
-const sizes: Record<Size, string> = {
-  md: 'px-5 py-2.5 text-[15px] min-h-[44px]',
-  lg: 'px-10 py-5 text-[17px] min-h-[56px]',
-};
-
 function trackClick(label?: string) {
-  if (!label) return;
-  // Custom event on window for any listener (GA4, Plausible, custom)
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent('cta_click', { detail: { label } }));
-    // Yandex.Metrika goal (no-op if ym is not loaded)
-    const w = window as unknown as { ym?: (id: number, action: string, name: string) => void };
-    const id = process.env.NEXT_PUBLIC_YM_ID;
-    if (w.ym && id) {
-      try {
-        w.ym(Number(id), 'reachGoal', `cta_${label}`);
-      } catch {
-        /* ignore */
-      }
-    }
+  if (!label || typeof window === 'undefined') return;
+  window.dispatchEvent(new CustomEvent('cta_click', { detail: { label } }));
+  const w = window as unknown as { ym?: (id: number, action: string, name: string) => void };
+  const id = process.env.NEXT_PUBLIC_YM_ID;
+  if (w.ym && id) {
+    try { w.ym(Number(id), 'reachGoal', `cta_${label}`); } catch { /* ignore */ }
   }
 }
 
@@ -55,12 +31,15 @@ export function Button({
   onClick,
   variant = 'primary',
   size = 'md',
+  glow = false,
   children,
   className,
   analyticsLabel,
   external = true,
 }: ButtonProps) {
-  const cls = clsx(base, variants[variant], sizes[size], className);
+  const baseCls = variant === 'primary' ? 'btn-primary' : 'btn-ghost';
+  const sizeCls = size === 'lg' ? 'text-[1.1875rem] px-9 py-[1.125rem] min-h-[60px]' : '';
+  const cls = clsx(baseCls, sizeCls, glow && variant === 'primary' && 'pulse-glow', className);
 
   if (href) {
     return (
@@ -76,18 +55,28 @@ export function Button({
       </a>
     );
   }
-
   return (
     <button
       type="button"
-      onClick={() => {
-        trackClick(analyticsLabel);
-        onClick?.();
-      }}
+      onClick={() => { trackClick(analyticsLabel); onClick?.(); }}
       data-analytics={analyticsLabel}
       className={cls}
     >
       {children}
     </button>
+  );
+}
+
+export function TelegramIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M21.5 4.5 2.7 11.4c-1.3.5-1.3 1.2-.2 1.5l4.8 1.5 1.9 5.6c.2.6.4.8.9.8.4 0 .6-.2.8-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8L23 6.4c.3-1.3-.5-1.9-1.5-1.4Zm-3.7 4.4-9.1 8.2-.4 3.8-1.7-5.2 11.2-7.1c.5-.3 1-.1.6.3Z" />
+    </svg>
   );
 }

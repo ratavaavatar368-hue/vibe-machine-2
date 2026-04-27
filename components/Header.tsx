@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { Button } from './ui/Button';
+import { Button, TelegramIcon } from './ui/Button';
 import { siteConfig } from '@/data/config';
 
 const NAV = [
   { href: '#reels', label: 'Реелс' },
   { href: '#formats', label: 'Что делаем' },
   { href: '#process', label: 'Как работаем' },
-  { href: '#cta', label: 'Запустить' },
 ];
 
 export function Header() {
@@ -25,19 +24,20 @@ export function Header() {
   return (
     <header
       className={clsx(
-        'fixed inset-x-0 top-0 z-50 transition-all duration-200',
+        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
         'backdrop-blur-md',
         scrolled
-          ? 'border-b border-border bg-bg/70'
-          : 'border-b border-transparent bg-bg/40',
+          ? 'border-b border-white/[0.06] bg-black/70'
+          : 'border-b border-transparent bg-black/30',
       )}
     >
-      <div className="mx-auto flex max-w-container items-center justify-between gap-4 px-6 py-4 md:px-12">
+      <div className="container-x flex items-center justify-between gap-4 py-4">
         <a
           href="#top"
-          className="font-mono text-[13px] uppercase tracking-[0.1em] text-text transition-opacity hover:opacity-80"
+          className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.14em] text-text0 transition-opacity hover:opacity-80"
         >
-          {siteConfig.brand}
+          <span className="inline-block h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_var(--accent)]" />
+          VIBE MACHINE
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -45,7 +45,7 @@ export function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="text-[14px] text-text-dim transition-colors hover:text-text"
+              className="text-[14px] text-text1 transition-colors hover:text-text0"
             >
               {item.label}
             </a>
@@ -55,10 +55,11 @@ export function Header() {
         <Button
           href={siteConfig.tgLink}
           variant="primary"
-          size="md"
           analyticsLabel="header"
+          className="!min-h-[44px] !py-2.5 !px-5 !text-[15px]"
         >
-          Запустить →
+          <TelegramIcon size={16} />
+          Запустить
         </Button>
       </div>
     </header>

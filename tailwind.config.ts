@@ -9,30 +9,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: 'var(--bg)',
-        'bg-elev': 'var(--bg-elev)',
-        'bg-elev-2': 'var(--bg-elev-2)',
-        border: 'var(--border)',
-        'border-strong': 'var(--border-strong)',
-        text: 'var(--text)',
-        'text-dim': 'var(--text-dim)',
-        'text-mute': 'var(--text-mute)',
+        bg0: 'var(--bg-0)',
+        bg1: 'var(--bg-1)',
+        bg2: 'var(--bg-2)',
+        bg3: 'var(--bg-3)',
         accent: 'var(--accent)',
-        'accent-warn': 'var(--accent-warn)',
+        'accent-400': 'var(--accent-400)',
+        'accent-300': 'var(--accent-300)',
+        text0: 'var(--text-0)',
+        text1: 'var(--text-1)',
+        text2: 'var(--text-2)',
+        text3: 'var(--text-3)',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
-      },
-      maxWidth: {
-        container: '1200px',
-      },
-      borderRadius: {
-        DEFAULT: '12px',
-        btn: '8px',
-      },
-      transitionTimingFunction: {
-        'ease-out-quart': 'cubic-bezier(0.22, 1, 0.36, 1)',
+        display: ['var(--font-display)', 'Unbounded', 'system-ui', 'sans-serif'],
+        body: ['var(--font-body)', 'Manrope', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
     },
   },
